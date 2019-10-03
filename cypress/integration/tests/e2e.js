@@ -10,7 +10,7 @@ describe("Test The Application", () => {
     it("Add a Politician Happy Scenario...", () => {
         formPage.addPolitician()
     })
-    it.only("Add a Politician With an invalid URL...", () => {
+    it("Add a Politician With an invalid URL...", () => {
         formPage.addWithInvalidURL()
     })
 })
