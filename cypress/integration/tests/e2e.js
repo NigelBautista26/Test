@@ -7,7 +7,7 @@ describe("Test The Application", () => {
         base.goToURL()
         cy.url().should("include", "compute.amazonaws.com/")
     })
-    it("Add a Politician Happy Scenario...", () => {
+    it.only("Add a Politician Happy Scenario...", () => {
         formPage.addPolitician()
     })
     it("Add a Politician With an invalid URL...", () => {

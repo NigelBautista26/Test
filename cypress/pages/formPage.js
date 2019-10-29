@@ -12,7 +12,7 @@ class formPage {
     get riskLevel () { return cy.get("select[name='risk']") }
     get saveButton () { return cy.get('.btn') }
     get backButton () { return cy.get('.modal-footer > .btn') }
-    get addedPoliticianMessage () { return cy.get('.modal-body') }
+    get modal () { return cy.get('.modal-body').wait(5000) }
     get invalidURLMessage () { return cy.get('.invalid-feedback') }
     get validURLMessage () { return cy.get('.valid-feedback') }
     
@@ -34,9 +34,8 @@ class formPage {
         this.validURLMessage.should('have.text', 'Valid URL.') // assertion for the valid URL message...
         this.riskLevel.select(politicianFixture.risk)
         this.saveButton.trigger('mouseover').click()
-        cy.wait(5000) // I had an issue using a promise to wait for the Modal Element and so i just put a workaround wait here for now...
-        this.addedPoliticianMessage.should('contain', 'You added')
-        this.backButton.trigger('mouseover').click()
+        this.modal.should('be.visible').should('contain', 'You added')
+        this.backButton.should('be.visible').trigger('mouseover').click()
         })
     }
     addWithInvalidURL () {
@@ -48,12 +47,9 @@ class formPage {
         this.dateOfBirthField.trigger('mouseover').type(politicianFixture.dateOfBirth)
         this.positionField.trigger('mouseover').type(politicianFixture.position)
         this.urlField.trigger('mouseover').type(invalidURL)
-        this.invalidURLMessage.should('have.text', 'Invalid URL format.') // assertion for the Invalid URL error message...
-        this.riskLevel.select(politicianFixture.risk)
-        this.saveButton.trigger('mouseover').click() // This is a bug, because despite the invalid url format, it still lets me click the save button.
-        cy.wait(5000) // I had an issue using a promise to wait for the Modal Element and so i just put a workaround wait here for now...
-        this.addedPoliticianMessage.should('contain', 'You added')
-        this.backButton.trigger('mouseover').click() 
+        this.invalidURLMessage
+        .should('be.visible')
+        .should('have.text', 'Invalid URL format.') // assertion for the Invalid URL error message...
         })
     }
 }
